@@ -1,12 +1,12 @@
 trigger:
-- master
+- develop
 
 pool:
   vmImage: 'ubuntu-16.04'
 
 stages:
 - stage: Build_Stage
-  displayName: 
+  displayName: Build stage
   jobs:
   - job: BuildNuget
     displayName: Build Nuget packages
@@ -17,19 +17,19 @@ stages:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
-        projects: '**/*.csproj'
+        projects: '**/*.sln'
         feedsToUse: 'select'
 
     - task: DotNetCoreCLI@2
       inputs:
         command: 'build'
-        projects: '**/*.csproj'
+        projects: '**/*.sln'
         arguments: '--configuration $(BuildConfiguration)'
 
     - task: DotNetCoreCLI@2
       inputs:
         command: 'pack'
-        packagesToPack: '**/*.csproj'
+        packagesToPack: '**/*.sln'
         versioningScheme: 'off'
 
     - task: DotNetCoreCLI@2
@@ -37,4 +37,4 @@ stages:
         command: 'push'
         packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
         nuGetFeedType: 'internal'
-        publishVstsFeed: 'f50482f5-11a3-4eea-9ab0-2b4c997bd0e2'
+        publishVstsFeed: 'dc286125-35a3-4940-8ec2-5498bf1146f2/496a002b-70a7-4447-a78c-2f37db9f1bd9'
